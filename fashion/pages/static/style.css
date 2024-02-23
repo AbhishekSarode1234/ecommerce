@@ -1,0 +1,53 @@
+body {
+    animation: blink 7s infinite;
+}
+
+@keyframes blink {
+    0% {
+        background: lightslategray;
+    }
+    20%{
+        background: lightgreen;
+    }
+    40%{
+        background: aqua;
+    }
+    60%{
+        background: red;
+    }
+    80%{
+        background: blueviolet;
+    }
+    100%{
+        background: lightgoldenrodyellow;
+    }
+}
+
+.button {border-radius: 90%;}
+
+
+.card-text{
+    color: green;
+    font-weight: 600;
+}
+
+.card-title{
+    font-weight: 900;
+}
+
+.card{
+    height: 400px;
+}
+
+.row{
+    height: 200px;
+}
+
+.card-1{
+    height: 50px;
+}
+
+.card-footer{
+    position:relative;
+    margin-top:100%;
+}

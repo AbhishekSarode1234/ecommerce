@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>checkout Site</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row-1">
+           <div class="col-md-6">
+            <ul class="list-group">
+                <li class="nav-item">
+                    <button id="cart" type="button" class="btn btn-secondary" data-bs-toggle="popover" data-bs-placement="top" title="HTML Content Popover" data-bs-html="true" data-bs-content="<button>checkout</button>">
+                    Cart(0)
+                  </button>
+                </li>
+            </ul>
+           </div>  
+        </div>
+    </div>
+    
+</body>
+<script> type="text/javascript">
+    console.log('this is working');
+    
+    if(localStorage.getItem('cart')==null){
+      var cart = {};
+      
+    }
+    else{
+     cart = JSON.parse(localStorage.getItem('cart'));
+     document.getElementById("cart").innerHTML ="cart("+ Object.keys(cart).length +")";
+    }
+   $(document).on('click','.atc',function()
+    {
+     console.log('added to cart');
+     var item_id = this.id.toString();
+     console.log(item_id);
+     if (cart[item_id]!=undefined){
+       cart[item_id].itemCount=cart[item_id].itemCount +1 ;
+       
+     }
+     else{
+       //cart[item_id].itemCount=1;
+       //cart[item_id].itemName=$(this).parent().find("#nm"+item_id).html();
+       cart[item_id]={itemCount:1,itemName:$(this).parent().find("#nm"+item_id).html()};
+     }
+      console.log(cart);
+      localStorage.setItem('cart',JSON.stringify(cart));
+      document.getElementById("cart").innerHTML ="cart("+ Object.keys(cart).length +")";
+      var size = Object.keys(cart).length;
+      console.log(size)
+    });
+ 
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+   document.getElementById("cart").setAttribute('data-bs-content',cartString);
+   return new bootstrap.Popover(popoverTriggerEl)
+ });
+ 
+ var cartString="";
+ DisplayCart(cart);
+ 
+ function DisplayCart(cart){ 
+    html:true,
+    cartString="";
+    cartString += "<a href='/checkout' class='btn btn-warning'>Check-out</a></br>"
+    var cartIndex = 1;
+    for(var x in cart){
+     cartString += cartIndex;
+     //cartString += document.getElementById("nm"+x).innerHTML + "Qty:" + cart[x]+ "</br>";
+     cartString += cart[x].itemName + "Qty:" + cart[x].itemCount+ "</br>";
+     cartIndex += 1;
+    }
+    
+    //document.write(cartString += "<a href='/checkout'></a>");
+    //cartString += <a href="#" onclick="window.open('/checkout');\"> link </a>);
+    document.getElementById("cart").setAttribute('data-bs-content',cartString); 
+       
+ }
+ 
+ $(document).on('click','#cart',function()
+    {
+     DisplayCart(cart);
+    });
+
+</script>
+</html>
